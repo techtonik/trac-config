@@ -52,11 +52,11 @@ class Trac(service.Service):
             git.branch('https://github.com/twisted-infra/trac-config', self.configDir)
             git.branch('https://github.com/twisted-infra/t-web', '~/website')
 
+            pip.install('trac==1.0.1', python='system')
+
             if _installDeps:
-                pip.install('git+https://github.com/twisted-infra/twisted-trac-source.git', python='system')
                 pip.install('git+https://github.com/twisted-infra/twisted-trac-plugins.git', python='system')
             else:
-                pip.install('--no-deps --upgrade git+https://github.com/twisted-infra/twisted-trac-source.git', python='system')
                 pip.install('--no-deps --upgrade git+https://github.com/twisted-infra/twisted-trac-plugins.git', python='system')
 
 
@@ -117,6 +117,17 @@ class Trac(service.Service):
                     }, localfile)
                     if restoreDb:
                         postgres.restoreFromPath('trac', temp)
+
+
+    def task_upgrade10(self):
+        """
+        potato
+        """
+
+        with settings(user=self.serviceUser):
+            self.update()
+
+            run(".local/bin/trac-admin {}/trac-env upgrade".format(self.configDir))
 
 
 
