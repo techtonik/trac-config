@@ -127,8 +127,16 @@ class Trac(service.Service):
         with settings(user=self.serviceUser):
             self.update()
 
-            run(".local/bin/trac-admin {}/trac-env upgrade".format(self.configDir))
+            run("/bin/mv ~/attachments ~/attachments.old")
+            run("/bin/ln -nsf ~/attachments.old {}/trac-env/attachments".format(self.configDir))
 
+            run("/bin/mkdir ~/attachments")
+            run("/bin/mkdir {}/trac-env/files".format(self.configDir))
+            run("/bin/ln -nsf ~/attachments {}/trac-env/files/attachments".format(
+                self.configDir))
+
+            run(".local/bin/trac-admin {}/trac-env upgrade".format(self.configDir))
+            run(".local/bin/trac-admin {}/trac-env wiki upgrade".format(self.configDir))
 
 
 addTasks(globals(), Trac('trac').getTasks())
