@@ -120,7 +120,8 @@ class Trac(service.Service):
 
     def task_upgrade10(self):
         """
-        potato
+        The on-disk attachment storage location and storage format changed
+        between trac 0.11dev+twisted-patches and 1.0.1.
         """
 
         with settings(user=self.serviceUser):
