@@ -47,7 +47,6 @@ class Trac(service.Service):
         """
         Update trac config.
         """
-        # TODO
         with settings(user=self.serviceUser):
             git.branch('https://github.com/twisted-infra/trac-config', self.configDir)
             git.branch('https://github.com/twisted-infra/t-web', '~/website')
