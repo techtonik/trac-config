@@ -127,15 +127,29 @@ class Trac(service.Service):
         with settings(user=self.serviceUser):
             self.update()
 
+            # Move the old attachments directory out of the way, but keep it
+            # around.
             run("/bin/mv ~/attachments ~/attachments.old")
+            # Update the symlink within the git repository that was previously
+            # pointing at ~/attachments to point at ~/attachments.old.  Dump
+            # and restore work on ~/attachments.
             run("/bin/ln -nsf ~/attachments.old {}/trac-env/attachments".format(self.configDir))
 
+            # Create a new directory at the old attachment location, and point
+            # trac 1.0.1's new attachment storage directory at it.
             run("/bin/mkdir ~/attachments")
             run("/bin/mkdir {}/trac-env/files".format(self.configDir))
+            # Trac 1.0 moved attachments from trac-env/attachments to
+            # trac-env/files/attachments.
             run("/bin/ln -nsf ~/attachments {}/trac-env/files/attachments".format(
                 self.configDir))
 
+            # The file format for attachments also changed to be hashed and
+            # sharded, so trac-env upgrade is going to look in
+            # ~/trac-env/attachments (attachments.old).
             run(".local/bin/trac-admin {}/trac-env upgrade".format(self.configDir))
+            # Wiki pages have attachments too, so upgrade any metadata
+            # associated with those.
             run(".local/bin/trac-admin {}/trac-env wiki upgrade".format(self.configDir))
 
 
