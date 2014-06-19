@@ -30,7 +30,7 @@ class Trac(service.Service):
             run('/bin/ln -nsf ~/svn {}/trac-env/svn-repo'.format(self.configDir))
 
             run('/bin/mkdir -p ~/attachments')
-            run('/bin/ln -nsf ~/attachments {}/trac-env/attachments'.format(
+            run('/bin/ln -nsf ~/attachments {}/trac-env/files/attachments'.format(
                 self.configDir))
 
             run('/bin/ln -nsf ~/website/trac-files {}/trac-env/htdocs'.format(
