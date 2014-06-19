@@ -9,11 +9,11 @@
 # the terms of the GNU General Public License as published by the Free Software
 # Foundation; either version 2 of the License, or (at your option) any later
 # version.
-# 
+#
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the file COPYING for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along with
 # this program; if not, write to the Free Software Foundation, Inc., 51
 # Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
@@ -47,11 +47,11 @@ class TwistedAuthenticator(trac.web.auth.BasicAuthentication):
 
 
 class AuthenticationMiddleware(object):
- 
+
     def __init__(self, application, auths):
         self.application = application
         self.auths = auths
- 
+
     def __call__(self, environ, start_response):
         path_info = environ.get('PATH_INFO', '')
         path_parts = filter(None, path_info.split('/'))
@@ -103,9 +103,6 @@ class RootResource(Resource):
         if request.postpath and request.postpath[:1] == ["chrome"]:
             request.postpath.pop(0)
             return File(self.htdocs)
-        elif request.postpath and request.postpath[:1] == ["raw-attachment"]:
-            request.postpath.pop(0)
-            return File(self.attachments)
         else:
             return self.tracResource
 
