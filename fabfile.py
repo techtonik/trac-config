@@ -21,12 +21,10 @@ class Trac(service.Service):
         postgres.createDb('trac', 'trac')
 
         with settings(user=self.serviceUser):
-            pip.install('psycopg2 pygments spambayes==1.1b1', python='system')
+            pip.install('psycopg2 pygments', python='system')
             self.update(_installDeps=True)
             # Note that this has to be after trac is installed, to get the right version
             pip.install('TracAccountManager==0.4.3', python='system')
-            # This was the latest version at the time it was added.
-            pip.install('svn+https://svn.edgewall.com/repos/trac/plugins/1.0/spam-filter@13100', python='system')
 
             run('/bin/mkdir -p ~/svn')
             run('/bin/ln -nsf ~/svn {}/trac-env/svn-repo'.format(self.configDir))
@@ -59,6 +57,9 @@ class Trac(service.Service):
                 pip.install('git+https://github.com/twisted-infra/twisted-trac-plugins.git', python='system')
             else:
                 pip.install('--no-deps --upgrade git+https://github.com/twisted-infra/twisted-trac-plugins.git', python='system')
+            pip.install('spambayes==1.1b1', python='system')
+            # This was the latest version at the time it was added.
+            pip.install('svn+https://svn.edgewall.com/repos/trac/plugins/1.0/spam-filter@13100', python='system')
 
 
     def task_update(self):
