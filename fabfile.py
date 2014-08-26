@@ -21,10 +21,11 @@ class Trac(service.Service):
         postgres.createDb('trac', 'trac')
 
         with settings(user=self.serviceUser):
-            pip.install('psycopg2 pygments', python='system')
+            pip.install('psycopg2 pygments spambayes==1.1b1', python='system')
             self.update(_installDeps=True)
             # Note that this has to be after trac is installed, to get the right version
             pip.install('TracAccountManager==0.4.3', python='system')
+            pip.install('svn+http://svn.edgewall.com/repos/trac/plugins/1.0/spam-filter@13100', python='system')
 
             run('/bin/mkdir -p ~/svn')
             run('/bin/ln -nsf ~/svn {}/trac-env/svn-repo'.format(self.configDir))
