@@ -25,7 +25,8 @@ class Trac(service.Service):
             self.update(_installDeps=True)
             # Note that this has to be after trac is installed, to get the right version
             pip.install('TracAccountManager==0.4.3', python='system')
-            pip.install('svn+http://svn.edgewall.com/repos/trac/plugins/1.0/spam-filter@13100', python='system')
+            # This was the latest version at the time it was added.
+            pip.install('svn+https://svn.edgewall.com/repos/trac/plugins/1.0/spam-filter@13100', python='system')
 
             run('/bin/mkdir -p ~/svn')
             run('/bin/ln -nsf ~/svn {}/trac-env/svn-repo'.format(self.configDir))
