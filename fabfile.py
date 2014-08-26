@@ -59,7 +59,7 @@ class Trac(service.Service):
                 pip.install('--no-deps --upgrade git+https://github.com/twisted-infra/twisted-trac-plugins.git', python='system')
             pip.install('spambayes==1.1b1', python='system')
             # This was the latest version at the time it was added.
-            pip.install('svn+https://svn.edgewall.com/repos/trac/plugins/1.0/spam-filter@13100', python='system')
+            pip.install('svn+https://svn.edgewall.org/repos/trac/plugins/1.0/spam-filter@13100', python='system')
 
 
     def task_update(self):
