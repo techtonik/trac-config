@@ -1,0 +1,5 @@
+/* Twisted Trac Style */
+
+td.age {  /* do not wrap age column in timeline */
+  white-space: nowrap;
+}
